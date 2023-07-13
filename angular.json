@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "ng14_CRUD-pucp": {
+    "ng14-crud-pucp": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -80,10 +80,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "ng14_CRUD-pucp:build:production"
+              "browserTarget": "ng14-crud-pucp:build:production"
             },
             "development": {
-              "browserTarget": "ng14_CRUD-pucp:build:development"
+              "browserTarget": "ng14-crud-pucp:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -91,7 +91,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "ng14_CRUD-pucp:build"
+            "browserTarget": "ng14-crud-pucp:build"
           }
         },
         "test": {
@@ -108,9 +108,14 @@
             ],
             "styles": [
               "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
+              "./node_modules/bootstrap/dist/css/bootstrap.min.css",
               "src/styles.scss"
             ],
-            "scripts": []
+            "scripts": [
+              "./node_modules/jquery/dist/jquery.min.js",
+              "./node_modules/bootstrap/dist/js/bootstrap.bundle.min.js",
+              "./node_modules/hammerjs/hammer.min.js"
+            ]
           }
         }
       }
