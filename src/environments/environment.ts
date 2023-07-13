@@ -3,7 +3,11 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  // API_URL: 'https://json-server-pucp.herokuapp.com/',
+  // API_URL: 'https://json-server-pucp.cyclic.app/',
+  API_URL: 'https://json-server-data-onrender.onrender.com/',
+  MONGO_URL: 'https://angular15-signup-verify-backend.onrender.com'
 };
 
 /*
