@@ -16,29 +16,48 @@ import { BreadcrumbComponent } from './components/breadcrumb/breadcrumb.componen
 import { Breadcrumb2Component } from './components/breadcrumb2/breadcrumb2.component';
 import { CountriesComponent } from './components/countries/countries.component';
 import { LoginComponent } from './components/login/login.component';
-import { LoginUserComponent } from './components/login-user/login-user.component';
+// import { LoginUserComponent } from './components/login-user/login-user.component';
+
+import { AuthGuard } from './components/guard/auth.guard';
+import { RegisterComponent } from './components/register/register.component';
+import { UserComponent } from './components/user/user.component';
+import { CustomerComponent } from './components/customer/customer.component';
+import { LoginsComponent } from './components/logins/logins.component';
+import { LoggedInComponent } from './components/logged-in/logged-in.component';
 
 
 const routes: Routes = [
   {
-    path: '',
-    component: LoginUserComponent
-  },
-  {
     path: 'init',
     component: InitComponent
+  },
+  {
+    path: 'loggedIn',
+    component: LoggedInComponent
   },
   {
     path: 'login',
     component: LoginComponent
   },
   {
+    path: 'register',
+    component: RegisterComponent
+  },
+  {
     path: 'home',
-    component: HomeComponent
+    component: HomeComponent,
+    canActivate: [AuthGuard],
+    data: {
+      title: 'Home'
+    }
   },
   {
     path: 'about',
-    component: AboutComponent
+    component: AboutComponent,
+    canActivate: [AuthGuard],
+    data: {
+      title: 'About'
+    }
   },
   {
     path: 'breadcrumb',
@@ -66,24 +85,56 @@ const routes: Routes = [
   },
   {
     path: 'courses',
-    component: CoursesComponent
+    component: CoursesComponent,
+    // canActivate: [AuthGuard],
+    // data: {
+    //   title: 'Courses'
+    // }
   },
   {
     path: 'posts',
-    component: PostsComponent
+    component: PostsComponent,
+    // canActivate: [AuthGuard],
+    // data: {
+    //   title: 'Posts'
+    // }
   },
   {
     path: 'users',
-    component: UsersComponent
+    component: UsersComponent,
+    // canActivate: [AuthGuard],
+    // data: {
+    //   title: 'Users'
+    // }
   },
   {
     path: 'products',
-    component: ProductsComponent
+    component: ProductsComponent,
+    // canActivate: [AuthGuard],
+    // data: {
+    //   title: 'Products'
+    // }
   },
   {
     path: 'countries',
-    component: CountriesComponent
-  }
+    component: CountriesComponent,
+    // canActivate: [AuthGuard],
+    // data: {
+    //   title: 'Countries'
+    // }
+  },
+  {
+    path: 'logins',
+    component: LoginsComponent,
+    canActivate: [AuthGuard],
+    data: {
+      title: 'Logins'
+    }
+  },
+
+  {component:RegisterComponent,path:'register'},
+  {component:UserComponent,path:'user',canActivate:[AuthGuard]},
+  {component:CustomerComponent,path:'customer',canActivate:[AuthGuard]},
 
 ];
 

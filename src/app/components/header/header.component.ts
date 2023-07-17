@@ -17,6 +17,7 @@ import { LoginDialogComponent } from '../login-dialog/login-dialog.component';
 export class HeaderComponent implements OnInit, AfterViewInit {
   buttonLabel!: any;
   addMode: boolean = false;
+  isLoggedIn: boolean = false;
 
   constructor(
     private dialog: MatDialog,
@@ -25,7 +26,8 @@ export class HeaderComponent implements OnInit, AfterViewInit {
   ) { }
 
   ngOnInit(): void {
-    this.hideButton();
+    // this.hideButton();
+    this.checkIsLoggedIn();
   }
 
   ngAfterViewInit(): void {
@@ -56,12 +58,28 @@ export class HeaderComponent implements OnInit, AfterViewInit {
     this.getButtonLabel();
   }
 
+  checkIsLoggedIn() {
+
+    this.hideButton();
+
+    const username = sessionStorage.getItem('username');
+    if (username) {
+      this.isLoggedIn = true;
+    } else {
+      this.isLoggedIn = false;
+    }
+  }
+
+  makeLoggedOut() {
+    this.isLoggedIn = false;
+  }
+
   openDialog() {
 
     let value = localStorage.getItem('buttonValue');
 
     switch(value) {
-      case 'Login': {
+      case 'Logins': {
         this.dialog.open(LoginDialogComponent, {
           width: '37%'
         }).afterClosed().subscribe(val => {

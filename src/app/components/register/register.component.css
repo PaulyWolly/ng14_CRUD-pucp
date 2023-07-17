@@ -1,0 +1,15 @@
+mat-card {
+  width: 60%;
+  margin: auto;
+  margin-top: 50px;
+  border: 1px solid #808080;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+.example-full-width {
+  width: 100%
+}
+mat-card-header {
+  text-align: left;
+  position: relative;
+  right: 32px;
+}

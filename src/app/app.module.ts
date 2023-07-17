@@ -41,6 +41,18 @@ import { CountriesComponent } from './components/countries/countries.component';
 import { LoginComponent } from './components/login/login.component';
 import { LoginDialogComponent } from './components/login-dialog/login-dialog.component';
 import { LoginUserComponent } from './components/login-user/login-user.component';
+import { RegisterUserComponent } from './components/register-user/register-user.component';
+import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
+import { NotFoundComponent } from './components/not-found/not-found.component';
+import { LoginsComponent } from './components/logins/logins.component';
+import { RegisterComponent } from './components/register/register.component';
+
+import { ToastrModule } from 'ngx-toastr';
+import { UserComponent } from './components/user/user.component';
+import { UpdatepopupComponent } from './components/updatepopup/updatepopup.component';
+import { CustomerComponent } from './components/customer/customer.component';
+import { NotifierComponent } from './components/notifier/notifier.component';
+import { LoggedInComponent } from './components/logged-in/logged-in.component';
 
 
 @NgModule({
@@ -73,7 +85,17 @@ import { LoginUserComponent } from './components/login-user/login-user.component
     CountriesComponent,
     LoginComponent,
     LoginDialogComponent,
-    LoginUserComponent
+    LoginUserComponent,
+    RegisterUserComponent,
+    ForgotPasswordComponent,
+    NotFoundComponent,
+    LoginsComponent,
+    RegisterComponent,
+    UserComponent,
+    UpdatepopupComponent,
+    CustomerComponent,
+    NotifierComponent,
+    LoggedInComponent
   ],
   imports: [
     BrowserModule,
@@ -86,7 +108,11 @@ import { LoginUserComponent } from './components/login-user/login-user.component
     HttpClientModule,
     MatDatepickerModule,
     MatMenuModule,
-    MatChipsModule
+    MatChipsModule,
+    ToastrModule.forRoot({
+
+    })
+
   ],
   providers: [],
   bootstrap: [AppComponent]

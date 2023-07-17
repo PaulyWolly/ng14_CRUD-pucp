@@ -1,0 +1,9 @@
+.mat-success {
+  color: white;
+  background-color: green;
+}
+
+.mat-danger {
+  color: white;
+  background-color: red;
+}

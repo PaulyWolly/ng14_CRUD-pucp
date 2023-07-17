@@ -19,6 +19,7 @@ export class HeaderButtonComponent implements OnInit {
 
   @Input() buttonLabel: any = 'value';
   @Input() dialogTitle: any = 'Dialog Label';
+  isLoggedIn = false;
 
   //buttonLabel: string = 'value';
 
@@ -29,7 +30,7 @@ export class HeaderButtonComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-
+    // this.checkLoggedIn();
   }
 
   openDialog() {
@@ -66,6 +67,7 @@ export class HeaderButtonComponent implements OnInit {
           this.apiSrvc.getCourses()
             .subscribe({
               next: (res) => {
+                this.setLoggedIn();
                 // reload application to see new product
                 window.location.reload();
               },
@@ -84,6 +86,7 @@ export class HeaderButtonComponent implements OnInit {
           this.apiSrvc.getUsers()
             .subscribe({
               next: (res) => {
+                this.setLoggedIn();
                 // reload application to see new product
                 window.location.reload();
               },
@@ -102,6 +105,7 @@ export class HeaderButtonComponent implements OnInit {
           this.apiSrvc.getProducts()
             .subscribe({
               next: (res) => {
+                this.setLoggedIn();
                 // reload application to see new product
                 window.location.reload();
               },
@@ -120,6 +124,7 @@ export class HeaderButtonComponent implements OnInit {
           this.apiSrvc.getPosts()
             .subscribe({
               next: (res) => {
+                this.setLoggedIn();
                 // reload application to see new product
                 window.location.reload();
               },
@@ -129,6 +134,23 @@ export class HeaderButtonComponent implements OnInit {
             });
         }
       });
+    }
+  }
+
+  setNotLoggedIn() {
+    const value = localStorage.setItem('isLoggedIn', '')
+  }
+
+  setLoggedIn() {
+    const value = localStorage.setItem('isLoggedIn', 'true')
+  }
+
+  checkLoggedIn() {
+    const value = localStorage.getItem('isLoggedIn');
+    if (value == '') {
+      return false;
+    } else {
+      return this.isLoggedIn = true;
     }
   }
 

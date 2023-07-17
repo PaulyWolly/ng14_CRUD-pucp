@@ -1,13 +1,8 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
-import { ApiService } from '../../services/api.service';
-import { MatTableDataSource } from '@angular/material/table';
-import { MatPaginator } from '@angular/material/paginator';
-import { MatSort, Sort } from '@angular/material/sort';
-import { MatDialog } from '@angular/material/dialog';
-import { LiveAnnouncer } from '@angular/cdk/a11y';
-import { LoginInterface } from 'src/app/models/login.interface';
-import { LoginDialogComponent } from '../login-dialog/login-dialog.component';
-
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -15,97 +10,64 @@ import { LoginDialogComponent } from '../login-dialog/login-dialog.component';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-  @Input() buttonLabel!: string;
 
-  login!: LoginInterface[];
-  isLoading = true;
-
-  displayedColumns: string[] = ["id", "username", "firstname", "lastname", "email", "date", "active", "role", "action"];
-  dataSource!: MatTableDataSource<any>;
-
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
-  @ViewChild(MatSort) sort!: MatSort;
+  loginform!: FormGroup;
+  result: any;
+  isLoggedIn = false;
 
   constructor(
-    private apiService: ApiService,
-    private dialog: MatDialog,
-    private _liveAnnouncer: LiveAnnouncer
-  ) { }
-
-  ngOnInit(): void {
-    this.getAllLogins();
+    private formBuilder: FormBuilder,
+    private toastr: ToastrService,
+    private service: AuthService,
+    private router: Router
+  ) {
+      sessionStorage.clear();
   }
 
-  getAllLogins() {
-    this.apiService.getLogins()
-      .subscribe({
-        next: (res: any) => {
-          console.log('Our List of Logins: ', res);
-
-          this.isLoading = false;
-
-          this.dataSource = new MatTableDataSource(res);
-          this.dataSource.paginator = this.paginator;
-          this.dataSource.sort = this.sort;
-
-        },
-        error: (res: any) => {
-          this.isLoading = false;
-          alert('Error occurred while fetching list of Logins');
-        }
-      });
-  }
-
-
-  onEditLogin(row: any) {
-    this.dialog.open(LoginDialogComponent, {
-      width: '37%',
-      data: row
-    }).afterClosed().subscribe(val => {
-      if (val === 'update') {
-
-        this.getAllLogins();
-      }
+  ngOnInit() {
+    this.loginform = this.formBuilder.group({
+      id: ['', Validators.required],
+      password: ['', Validators.required]
     });
+
+    this.checkIsLoggedIn()
   }
 
-  onDeleteLogin(id: any) {
-    let text = "Are you sure you want to delete User with " + id + " ?? \nOK or Cancel.";
-    if (confirm(text) == true) {
-      this.deleteTheLogin(id);
+  checkIsLoggedIn() {
+
+    // this.hideButton();
+
+    const username = sessionStorage.getItem('username');
+    if (username) {
+      this.isLoggedIn = true;
+    } else {
+      this.isLoggedIn = false;
     }
   }
 
-  deleteTheLogin(id: any) {
-    this.apiService.deleteLogin(id)
-      .subscribe({
-        next: (res) => {
-          console.log('User login deleted');
-          this.getAllLogins();
-        },
-        error: () => {
-          alert('Error deleting User Login');
+
+  proceedlogin() {
+
+    this.isLoggedIn = true;
+
+    if (this.loginform.valid) {
+      this.service.GetUserbyCode(this.loginform.value.id).subscribe(item => {
+        this.result = item;
+        if (this.result.password === this.loginform.value.password) {
+          if (this.result.isactive) {
+            sessionStorage.setItem('username',this.result.id);
+            sessionStorage.setItem('role',this.result.role);
+            this.router.navigate(['loggedIn']);
+            this.checkIsLoggedIn();
+          } else {
+            this.toastr.error('Please contact Admin', 'InActive User');
+          }
+        } else {
+          this.toastr.error('Invalid credentials');
         }
       });
-
-  }
-
-  applyFilter(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
-
-    if (this.dataSource.paginator) {
-      this.dataSource.paginator.firstPage();
-    }
-  }
-
-  /** Announce the change in sort state */
-  announceSortChange(sortState: Sort) {
-    if (sortState.direction) {
-      this._liveAnnouncer.announce(`Sorted ${sortState.direction}ending`);
     } else {
-      this._liveAnnouncer.announce('Sorting cleared');
+      this.toastr.warning('Please enter valid data.')
     }
   }
-
 }
