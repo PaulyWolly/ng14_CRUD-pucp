@@ -29,7 +29,7 @@ export class AuthService {
     return this.http.put(this.apiUrlUser + '/' + id, inputdata);
   }
   getuserrole(){
-    return this.http.get(this.apiUrl + '/role');
+    return this.http.get(this.apiUrl + 'role');
   }
   isloggedin(){
     return sessionStorage.getItem('username')!=null;
