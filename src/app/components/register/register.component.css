@@ -13,3 +13,13 @@ mat-card-header {
   position: relative;
   right: 32px;
 }
+
+.right-align {
+  position: absolute;
+  right: 20px;
+}
+
+.color-green {
+  background-color: green;
+  color: white;
+}

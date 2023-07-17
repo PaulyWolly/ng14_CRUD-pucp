@@ -35,6 +35,10 @@ export class RegisterComponent implements OnInit {
     });
   }
 
+  goBack() {
+    history.back();
+  }
+
 
   proceedregister() {
     if (this.registerForm.valid) {
