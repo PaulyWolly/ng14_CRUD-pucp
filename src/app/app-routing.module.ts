@@ -24,6 +24,7 @@ import { UserComponent } from './components/user/user.component';
 import { CustomerComponent } from './components/customer/customer.component';
 import { LoginsComponent } from './components/logins/logins.component';
 import { LoggedInComponent } from './components/logged-in/logged-in.component';
+import { Register2Component } from './components/register2/register2.component';
 
 
 const routes: Routes = [
@@ -133,6 +134,7 @@ const routes: Routes = [
   },
 
   {component:RegisterComponent,path:'register'},
+  {component:Register2Component,path:'register2'},
   {component:UserComponent,path:'user',canActivate:[AuthGuard]},
   {component:CustomerComponent,path:'customer',canActivate:[AuthGuard]},
 

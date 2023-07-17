@@ -53,6 +53,7 @@ import { UpdatepopupComponent } from './components/updatepopup/updatepopup.compo
 import { CustomerComponent } from './components/customer/customer.component';
 import { NotifierComponent } from './components/notifier/notifier.component';
 import { LoggedInComponent } from './components/logged-in/logged-in.component';
+import { Register2Component } from './components/register2/register2.component';
 
 
 @NgModule({
@@ -95,7 +96,8 @@ import { LoggedInComponent } from './components/logged-in/logged-in.component';
     UpdatepopupComponent,
     CustomerComponent,
     NotifierComponent,
-    LoggedInComponent
+    LoggedInComponent,
+    Register2Component
   ],
   imports: [
     BrowserModule,
