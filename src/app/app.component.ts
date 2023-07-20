@@ -13,6 +13,8 @@ import { AppService } from './services/app.service';
 //  ng-idel libraries
 import { DEFAULT_INTERRUPTSOURCES, Idle } from '@ng-idle/core';
 import { Keepalive } from '@ng-idle/keepalive';
+import { ModalInactivityComponent } from './components/modal-inactivity/modal-inactivity.component';
+import { ToastrService } from 'ngx-toastr';
 
 // ngx-bootstrap modal handling
 // import { BsModalService } from 'ngx-bootstrap/modal';
@@ -57,7 +59,8 @@ export class AppComponent implements OnInit, AfterViewInit {
     private router: Router,
     private keepalive: Keepalive,
     // private modalService: BsModalService,
-    private appService: AppService
+    private appService: AppService,
+    private toastr: ToastrService
   ) { }
 
   ngOnInit(): void {
@@ -70,16 +73,20 @@ export class AppComponent implements OnInit, AfterViewInit {
       // show the modal
       this.idleState = "You\'ve been idle."
       console.log(this.idleState);
+      this.toastr.error('You\'ve been idle!');
+
     });
 
     this._idle.onTimeoutWarning.subscribe((secondsLeft: number) => {
       // Update the warning message
-      console.log('Loggin out in:', secondsLeft)
+      console.log('Logging out in:', secondsLeft);
+      this.toastr.info(`Logging out in ${secondsLeft} seconds`);
     });
 
     this._idle.onIdleEnd.subscribe(() => {
       this.idleState = 'No longer idle. Reseting.'
       console.log(this.idleState);
+      this.toastr.success('No longer idle. Resetting.');
       this.reset();
     });
 
@@ -87,6 +94,7 @@ export class AppComponent implements OnInit, AfterViewInit {
       // Hide the modal, log out, do something else
       this.idleState = 'Logging out!'
       console.log(this.idleState);
+      this.toastr.error('Logging out!');
       this.logout();
     });
 
@@ -99,6 +107,20 @@ export class AppComponent implements OnInit, AfterViewInit {
   ngAfterViewInit() {
     localStorage.setItem('buttonLabel', '');
     localStorage.setItem('buttonValue', '');
+  }
+
+  openDialog(code: string) {
+    const popup = this.dialog.open(ModalInactivityComponent, {
+      width: '30%',
+      data: {
+        usercode: code
+      }
+    });
+
+    popup.afterClosed()
+      .subscribe(res => {
+      this.reset();
+    });
   }
 
   reset() {

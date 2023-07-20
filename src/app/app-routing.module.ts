@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './components/home/home.component';
-import { ApplicationComponent } from './components/application/application.component';
+// import { ApplicationComponent } from './components/application/application.component';
 import { AboutComponent } from './components/about/about.component';
 import { CoursesComponent } from './components/courses/courses.component';
 import { InitComponent } from './components/init/init.component';
@@ -25,6 +25,7 @@ import { CustomerComponent } from './components/customer/customer.component';
 import { LoginsComponent } from './components/logins/logins.component';
 import { LoggedInComponent } from './components/logged-in/logged-in.component';
 import { RegisterPostLoginComponent } from './components/register-post-login/register-post-login.component';
+import { NotFoundComponent } from './components/not-found/not-found.component';
 
 
 const routes: Routes = [
@@ -141,6 +142,10 @@ const routes: Routes = [
   {component:RegisterPostLoginComponent,path:'register-post-login'},
   {component:UserComponent,path:'user',canActivate:[AuthGuard]},
   {component:CustomerComponent,path:'customer',canActivate:[AuthGuard]},
+  {
+    path: "**",
+    component: NotFoundComponent
+  }
 
 ];
 

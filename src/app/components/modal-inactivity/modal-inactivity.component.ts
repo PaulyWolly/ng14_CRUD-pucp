@@ -32,4 +32,8 @@ export class ModalInactivityComponent implements OnInit {
 
   }
 
+  logout() {
+
+  }
+
 }
