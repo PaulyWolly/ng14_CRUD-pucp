@@ -5,11 +5,11 @@ import { AuthService } from '../../services/auth.service';
 import { ToastrService } from 'ngx-toastr'
 
 @Component({
-  selector: 'app-register2',
-  templateUrl: './register2.component.html',
-  styleUrls: ['./register2.component.css']
+  selector: 'app-register-post-login',
+  templateUrl: './register-post-login.component.html',
+  styleUrls: ['./register-post-login.component.css']
 })
-export class Register2Component implements OnInit {
+export class RegisterPostLoginComponent implements OnInit {
 
   registerForm!: FormGroup;
 

@@ -24,10 +24,14 @@ import { UserComponent } from './components/user/user.component';
 import { CustomerComponent } from './components/customer/customer.component';
 import { LoginsComponent } from './components/logins/logins.component';
 import { LoggedInComponent } from './components/logged-in/logged-in.component';
-import { Register2Component } from './components/register2/register2.component';
+import { RegisterPostLoginComponent } from './components/register-post-login/register-post-login.component';
 
 
 const routes: Routes = [
+  {
+    path: '',
+    component: LoginComponent
+  },
   {
     path: 'init',
     component: InitComponent
@@ -134,7 +138,7 @@ const routes: Routes = [
   },
 
   {component:RegisterComponent,path:'register'},
-  {component:Register2Component,path:'register2'},
+  {component:RegisterPostLoginComponent,path:'register-post-login'},
   {component:UserComponent,path:'user',canActivate:[AuthGuard]},
   {component:CustomerComponent,path:'customer',canActivate:[AuthGuard]},
 

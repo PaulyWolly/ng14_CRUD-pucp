@@ -53,7 +53,9 @@ import { UpdatepopupComponent } from './components/updatepopup/updatepopup.compo
 import { CustomerComponent } from './components/customer/customer.component';
 import { NotifierComponent } from './components/notifier/notifier.component';
 import { LoggedInComponent } from './components/logged-in/logged-in.component';
-import { Register2Component } from './components/register2/register2.component';
+import { RegisterPostLoginComponent } from './components/register-post-login/register-post-login.component';
+import { NgIdleKeepaliveModule } from '@ng-idle/keepalive';
+// import { ModalModule } from 'ngx-bootstrap/modal';
 
 
 @NgModule({
@@ -97,7 +99,7 @@ import { Register2Component } from './components/register2/register2.component';
     CustomerComponent,
     NotifierComponent,
     LoggedInComponent,
-    Register2Component
+    RegisterPostLoginComponent
   ],
   imports: [
     BrowserModule,
@@ -113,7 +115,9 @@ import { Register2Component } from './components/register2/register2.component';
     MatChipsModule,
     ToastrModule.forRoot({
 
-    })
+    }),
+    NgIdleKeepaliveModule.forRoot(),
+    // ModalModule.forRoot()
 
   ],
   providers: [],

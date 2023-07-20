@@ -6,14 +6,41 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
 import { LiveAnnouncer } from '@angular/cdk/a11y';
 
+import { AuthService } from './services/auth.service';
+import { Router } from '@angular/router';
+import { AppService } from './services/app.service';
+
+//  ng-idel libraries
+import { DEFAULT_INTERRUPTSOURCES, Idle } from '@ng-idle/core';
+import { Keepalive } from '@ng-idle/keepalive';
+
+// ngx-bootstrap modal handling
+// import { BsModalService } from 'ngx-bootstrap/modal';
+// import { BsModalRef } from 'ngx-bootstrap/modal';
+// import { ModalDirective } from 'ngx-bootstrap/modal';
+
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit, AfterViewInit {
-  title = 'MaterialBootstrapStarter';
+  title = 'ng14 CRUD pucp w/inactivity';
   buttonLabel: any;
+
+  idleState = 'Not started.';
+  idleState2 = '';
+  timedOut = false;
+  lastPing?: Date;
+
+  // public modalRef!: BsModalRef;
+
+  // @ViewChild('childModal', { static: false }) childModal!: ModalDirective;
+
+  private numberOfSeconds: number = 30;
+  private idleSeconds: number = 30;
+  private timeoutSeconds: number = 30;
 
   // displayedColumns: string[] = ["id", "productName", "category", "date", "freshness", "price", "comment", "action"];
   dataSource!: MatTableDataSource<any>;
@@ -24,12 +51,48 @@ export class AppComponent implements OnInit, AfterViewInit {
   constructor(
     private api: ApiService,
     private dialog: MatDialog,
-    private _liveAnnouncer: LiveAnnouncer
+    private _liveAnnouncer: LiveAnnouncer,
+    private _idle: Idle,
+    private authService: AuthService,
+    private router: Router,
+    private keepalive: Keepalive,
+    // private modalService: BsModalService,
+    private appService: AppService
   ) { }
 
   ngOnInit(): void {
     // this.getAllProducts();
+    this._idle.setIdle(this.idleSeconds);
+    this._idle.setTimeout(this.timeoutSeconds);
+    this._idle.setInterrupts(DEFAULT_INTERRUPTSOURCES);
 
+    this._idle.onIdleStart.subscribe(() => {
+      // show the modal
+      this.idleState = "You\'ve been idle."
+      console.log(this.idleState);
+    });
+
+    this._idle.onTimeoutWarning.subscribe((secondsLeft: number) => {
+      // Update the warning message
+      console.log('Loggin out in:', secondsLeft)
+    });
+
+    this._idle.onIdleEnd.subscribe(() => {
+      this.idleState = 'No longer idle. Reseting.'
+      console.log(this.idleState);
+      this.reset();
+    });
+
+    this._idle.onTimeout.subscribe(() => {
+      // Hide the modal, log out, do something else
+      this.idleState = 'Logging out!'
+      console.log(this.idleState);
+      this.logout();
+    });
+
+    this.keepalive.onPing.subscribe(() => this.lastPing = new Date());
+
+    this._idle.watch();
 
   }
 
@@ -38,62 +101,23 @@ export class AppComponent implements OnInit, AfterViewInit {
     localStorage.setItem('buttonValue', '');
   }
 
+  reset() {
+    this._idle.watch();
+    this.timedOut = false;
+  }
 
-  // getAllProducts() {
-  //   this.api.getProducts()
-  //     .subscribe({
-  //       next: (res: any) => {
-  //         console.log('Our products: ', res);
-  //         this.dataSource = new MatTableDataSource(res);
-  //         this.dataSource.paginator = this.paginator;
-  //         this.dataSource.sort = this.sort;
+  logout() {
+    this.authService.logout();
+    window.location.reload();
+    this.router.navigate(['login']);
+  }
 
-  //       },
-  //       error: (res: any) => {
-  //         alert('Error occurred while fetching products');
-  //       }
-  //     });
-  // }
-
-  // applyFilter(event: Event) {
-  //   const filterValue = (event.target as HTMLInputElement).value;
-  //   this.dataSource.filter = filterValue.trim().toLowerCase();
-
-  //   if (this.dataSource.paginator) {
-  //     this.dataSource.paginator.firstPage();
-  //   }
-  // }
-
-  // editProduct(row: any) {
-  //   this.dialog.open(DialogComponent, {
-  //     width: '30%',
-  //     data: row
-  //   }).afterClosed().subscribe(val => {
-  //     if (val === 'update') {
-  //       this.getAllProducts();
-  //     }
-  //   });
-  // }
-
-  // deleteProduct(id: number) {
-  //   this.api.deleteProduct(id)
-  //     .subscribe({
-  //       next: (res) => {
-  //         alert('Produce deleted successfully');
-  //         this.getAllProducts();
-  //       },
-  //       error: () => {
-  //         alert('Error occurred while deleting product');
-  //       }
-  //     });
-  // }
-
-  // /** Announce the change in sort state */
-  // announceSortChange(sortState: Sort) {
-  //   if (sortState.direction) {
-  //     this._liveAnnouncer.announce(`Sorted ${sortState.direction}ending`);
-  //   } else {
-  //     this._liveAnnouncer.announce('Sorting cleared');
-  //   }
-  // }
+  /** Announce the change in sort state */
+  announceSortChange(sortState: Sort) {
+    if (sortState.direction) {
+      this._liveAnnouncer.announce(`Sorted ${sortState.direction}ending`);
+    } else {
+      this._liveAnnouncer.announce('Sorting cleared');
+    }
+  }
 }

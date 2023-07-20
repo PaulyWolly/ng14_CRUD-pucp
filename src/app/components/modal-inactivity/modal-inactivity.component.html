@@ -1,0 +1,40 @@
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 id="dialog-child-name" class="modal-title pull-left">You Have Been Idle for 30 Seconds!</h4>
+          <button type="button" class="close pull-right" aria-label="Close" (click)="hideModal()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="alert alert-warning">
+            <span style="color: black">{{idleState}}<br>{{idleState2}}</span>
+          </div>
+
+          <div class="row mrgbtm">
+            <div class="col-md-4"></div>
+            <div class="col-md-2">
+                <button type="button" (click)="logout()" class="btn btn-danger">Logout</button>
+            </div>
+            <div class="col-md-2">
+              <button type="button" aria-label="Close" (click)="hideModal()" class="btn btn-success">
+                Stay
+              </button>
+              <!-- <button type="button" (click)="stay()" class="btn btn-success">Stay</button> -->
+
+            </div>
+            <div class="col-md-4"></div>
+          </div>
+        </div>
+          <!-- <div class="modal-body">
+              Content within the modal would go here!
+          </div>
+          <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-primary">Save changes</button>
+          </div> -->
+      </div>
+  </div>
+</div>

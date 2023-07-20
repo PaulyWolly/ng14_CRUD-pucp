@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { AuthService } from '../../services/auth.service';
 
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -14,6 +15,8 @@ export class LoginComponent implements OnInit {
   loginform!: FormGroup;
   result: any;
   isLoggedIn = false;
+
+  private numberOfSeconds: number = 30;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -30,7 +33,8 @@ export class LoginComponent implements OnInit {
       password: ['', Validators.required]
     });
 
-    this.checkIsLoggedIn()
+    this.checkIsLoggedIn();
+
   }
 
   checkIsLoggedIn() {
