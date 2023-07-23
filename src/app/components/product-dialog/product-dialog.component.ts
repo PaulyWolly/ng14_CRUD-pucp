@@ -100,7 +100,12 @@ export class ProductDialogComponent implements OnInit {
     this.apiSrvc.updateProduct(this.productForm.value, this.editData.id)
       .subscribe({
         next: (res) => {
-          alert('Product updated successfully');
+          // alert('Product updated successfully');
+          this.toastr.success(
+            'Product updated successfully',
+            'Product Update',
+            { timeOut: 5000 });
+
           this.productForm.reset();
           this.dialogRef.close('update');
         },
