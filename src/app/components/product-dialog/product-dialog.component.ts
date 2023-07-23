@@ -68,19 +68,13 @@ export class ProductDialogComponent implements OnInit {
           .subscribe({
             next: (res) => {
 
-              // alert('Product added successfully');
               this.toastr.success(
                 'Product added successfully',
                 'Product added',
                 { timeOut: 5000 });
 
-              // setTimeout(() => {
               this.productForm.reset();
               this.dialogRef.close('save');
-              // }, 5000);
-
-              this.apiSrvc.getProducts().subscribe({ next: (res) => { } });
-              // reload products
 
             },
             error: () => {
@@ -100,7 +94,7 @@ export class ProductDialogComponent implements OnInit {
     this.apiSrvc.updateProduct(this.productForm.value, this.editData.id)
       .subscribe({
         next: (res) => {
-          // alert('Product updated successfully');
+
           this.toastr.success(
             'Product updated successfully',
             'Product Update',
