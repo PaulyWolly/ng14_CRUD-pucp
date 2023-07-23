@@ -4,6 +4,7 @@ import { ApiService } from '../../services/api.service';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 import { ProductInterface } from '../../models/product.interface';
 import { Option } from '../../models/option.interface';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-product-dialog',
@@ -12,7 +13,9 @@ import { Option } from '../../models/option.interface';
 })
 export class ProductDialogComponent implements OnInit {
 
+  freshSelection!: string;
   freshnessList: string[] = ["Brand New", "Second Hand", "Refurbished"];
+
   productForm!: FormGroup;
   dialogTitle: string = 'Add a Product';
   actionLabel: string = 'Add';
@@ -28,6 +31,7 @@ export class ProductDialogComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private apiSrvc: ApiService,
+    private toastr: ToastrService,
     private dialog: MatDialog,
     private dialogRef: MatDialogRef<ProductDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public editData: any
@@ -64,10 +68,18 @@ export class ProductDialogComponent implements OnInit {
           .subscribe({
             next: (res) => {
 
-              alert('Product added successfully');
+              // alert('Product added successfully');
+              this.toastr.success(
+                'Product added successfully',
+                'Product added',
+                { timeOut: 5000 });
+
+              // setTimeout(() => {
               this.productForm.reset();
-              this.apiSrvc.getProducts().subscribe({ next: (res) => { } });
               this.dialogRef.close('save');
+              // }, 5000);
+
+              this.apiSrvc.getProducts().subscribe({ next: (res) => { } });
               // reload products
 
             },

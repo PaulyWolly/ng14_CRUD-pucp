@@ -55,7 +55,7 @@ import { NotifierComponent } from './components/notifier/notifier.component';
 import { LoggedInComponent } from './components/logged-in/logged-in.component';
 import { RegisterPostLoginComponent } from './components/register-post-login/register-post-login.component';
 import { NgIdleKeepaliveModule } from '@ng-idle/keepalive';
-// import { ModalModule } from 'ngx-bootstrap/modal';
+// import { NgToastModule } from 'ng-angular-popup';
 
 
 @NgModule({
@@ -113,12 +113,8 @@ import { NgIdleKeepaliveModule } from '@ng-idle/keepalive';
     MatDatepickerModule,
     MatMenuModule,
     MatChipsModule,
-    ToastrModule.forRoot({
-
-    }),
-    NgIdleKeepaliveModule.forRoot(),
-    // ModalModule.forRoot()
-
+    ToastrModule.forRoot({}),
+    NgIdleKeepaliveModule.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent]

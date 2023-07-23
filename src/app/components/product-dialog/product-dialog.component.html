@@ -46,12 +46,14 @@
     <label for="">
       <h1>Product Freshness <span class="font-16">(Choose option)</span></h1>
     </label>
-    <mat-radio-group formControlName="freshness"
-                     class="example-radio-group">
-      <mat-radio-button class="example-radio-button"
-                        value=""
-                        *ngFor="let item of freshnessList"
-                        [value]="item">
+    <mat-radio-group
+      formControlName="freshness"
+      class="example-radio-group"
+      [(ngModel)]="freshSelection">
+      <mat-radio-button
+        class="example-radio-button"
+        *ngFor="let item of freshnessList"
+        [value]="item">
         {{ item }}
       </mat-radio-button>
     </mat-radio-group>

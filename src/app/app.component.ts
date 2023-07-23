@@ -73,7 +73,9 @@ export class AppComponent implements OnInit, AfterViewInit {
       // show the modal
       this.idleState = "You\'ve been idle."
       console.log(this.idleState);
-      this.toastr.error('You\'ve been idle!');
+      this.toastr.error("You have been idle!", "Error Message", {
+        timeOut: 5000,
+      });
 
     });
 
