@@ -10,7 +10,7 @@ import { AuthService } from './_services/auth.service';
 import { Router } from '@angular/router';
 import { AppService } from './_services/app.service';
 
-//  ng-idel libraries
+//  ng-idle libraries
 import { DEFAULT_INTERRUPTSOURCES, Idle } from '@ng-idle/core';
 import { Keepalive } from '@ng-idle/keepalive';
 import { ModalInactivityComponent } from './components/modal-inactivity/modal-inactivity.component';
@@ -58,7 +58,6 @@ export class AppComponent implements OnInit, AfterViewInit {
     private authService: AuthService,
     private router: Router,
     private keepalive: Keepalive,
-    // private modalService: BsModalService,
     private appService: AppService,
     private toastr: ToastrService
   ) { }
@@ -71,7 +70,7 @@ export class AppComponent implements OnInit, AfterViewInit {
 
     this._idle.onIdleStart.subscribe(() => {
       // show the modal
-      this.idleState = "You\'ve been idle."
+      this.idleState = "You have been idle."
       console.log(this.idleState);
       this.toastr.error("You have been idle!", "Error Message", {
         timeOut: 5000,

@@ -32,7 +32,7 @@ import { HeaderButtonComponent } from './components/header-button/header-button.
 import { MatMenuModule } from '@angular/material/menu';
 import { ContextMenuComponent } from './components/contextmenu/contextmenu.component';
 import { SidenavAutosizeExample } from './components/sidenav-autosize-example/sidenav-autosize-example';
-import { ModalComponent } from './components/modal/modal.component';
+// import { ModalComponent } from './components/modal/modal.component';
 import { MatComponentsComponent } from './components/mat-components/mat-components.component';
 import { MatChipsModule } from '@angular/material/chips';
 import { BreadcrumbComponent } from './components/breadcrumb/breadcrumb.component';
@@ -83,7 +83,7 @@ import { EmployeeDialogComponent } from './components/employee-dialog/employee-d
     CourseDialogComponent,
     ContextMenuComponent,
     SidenavAutosizeExample,
-    ModalComponent,
+    // ModalComponent,
     MatComponentsComponent,
     BreadcrumbComponent,
     Breadcrumb2Component,
