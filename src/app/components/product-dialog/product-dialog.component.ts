@@ -4,6 +4,7 @@ import { ApiService } from '../../services/api.service';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 import { ProductInterface } from '../../models/product.interface';
 import { Option } from '../../models/option.interface';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-product-dialog',
@@ -12,7 +13,9 @@ import { Option } from '../../models/option.interface';
 })
 export class ProductDialogComponent implements OnInit {
 
+  freshSelection!: string;
   freshnessList: string[] = ["Brand New", "Second Hand", "Refurbished"];
+
   productForm!: FormGroup;
   dialogTitle: string = 'Add a Product';
   actionLabel: string = 'Add';
@@ -28,6 +31,7 @@ export class ProductDialogComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private apiSrvc: ApiService,
+    private toastr: ToastrService,
     private dialog: MatDialog,
     private dialogRef: MatDialogRef<ProductDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public editData: any
@@ -64,11 +68,13 @@ export class ProductDialogComponent implements OnInit {
           .subscribe({
             next: (res) => {
 
-              alert('Product added successfully');
+              this.toastr.success(
+                'Product added successfully',
+                'Product added',
+                { timeOut: 5000 });
+
               this.productForm.reset();
-              this.apiSrvc.getProducts().subscribe({ next: (res) => { } });
               this.dialogRef.close('save');
-              // reload products
 
             },
             error: () => {
@@ -88,7 +94,12 @@ export class ProductDialogComponent implements OnInit {
     this.apiSrvc.updateProduct(this.productForm.value, this.editData.id)
       .subscribe({
         next: (res) => {
-          alert('Product updated successfully');
+
+          this.toastr.success(
+            'Product updated successfully',
+            'Product Update',
+            { timeOut: 5000 });
+
           this.productForm.reset();
           this.dialogRef.close('update');
         },
