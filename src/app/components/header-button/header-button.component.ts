@@ -1,13 +1,15 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
-import { ApiService } from '../../services/api.service';
+import { ApiService } from '../../_services/api.service';
 
 import { PostDialogComponent } from '../post-dialog/post-dialog.component';
 import { UserDialogComponent } from '../user-dialog/user-dialog.component';
 import { ProductDialogComponent } from '../product-dialog/product-dialog.component';
 import { CourseDialogComponent } from '../course-dialog/course-dialog.component';
 import { LoginDialogComponent } from '../login-dialog/login-dialog.component';
+import { DataService } from 'src/app/_services/data.service';
+import { EmployeeDialogComponent } from '../employee-dialog/employee-dialog.component';
 
 
 @Component({
@@ -26,7 +28,8 @@ export class HeaderButtonComponent implements OnInit {
   constructor(
     private router: Router,
     private dialog: MatDialog,
-    private apiSrvc: ApiService
+    private apiSrvc: ApiService,
+    private dataSrvc: DataService
   ) { }
 
   ngOnInit(): void {
@@ -92,6 +95,25 @@ export class HeaderButtonComponent implements OnInit {
               },
               error: () => {
                 alert('Error occured while opening User dialog');
+              }
+            });
+        }
+      });
+    } else
+    if (value == 'Employee') {
+      this.dialog.open(EmployeeDialogComponent, {
+        width: '37%'
+      }).afterClosed().subscribe(val => {
+        if (val === 'save') {
+          this.dataSrvc.getEmployees()
+            .subscribe({
+              next: (res) => {
+                this.setLoggedIn();
+                // reload application to see new employee
+                window.location.reload();
+              },
+              error: () => {
+                alert('Error occured while opening Employee dialog');
               }
             });
         }

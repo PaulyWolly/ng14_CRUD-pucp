@@ -1,17 +1,17 @@
 import { Component, Input, Inject, OnInit, ViewChild } from '@angular/core';
-import { ApiService } from '../../services/api.service';
+import { ApiService } from '../../_services/api.service';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, Sort } from '@angular/material/sort';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { LiveAnnouncer } from '@angular/cdk/a11y';
-import { LoginInterface } from 'src/app/models/login.interface';
+import { LoginInterface } from 'src/app/_models/login.interface';
 import { LoginDialogComponent } from '../login-dialog/login-dialog.component';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { Option } from '../../models/option.interface';
+import { Option } from '../../_models/option.interface';
 import { first } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AccountService } from 'src/app/services/account.service';
+import { AccountService } from 'src/app/_services/account.service';
 
 
 @Component({

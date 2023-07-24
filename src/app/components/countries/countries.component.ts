@@ -1,11 +1,11 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
-import { ApiService } from '../../services/api.service';
+import { ApiService } from '../../_services/api.service';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, Sort } from '@angular/material/sort';
 import { MatDialog } from '@angular/material/dialog';
 import { LiveAnnouncer } from '@angular/cdk/a11y';
-import { CountryInterface } from 'src/app/models/country.interface';
+import { CountryInterface } from 'src/app/_models/country.interface';
 
 
 

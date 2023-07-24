@@ -55,6 +55,8 @@ import { NotifierComponent } from './components/notifier/notifier.component';
 import { LoggedInComponent } from './components/logged-in/logged-in.component';
 import { RegisterPostLoginComponent } from './components/register-post-login/register-post-login.component';
 import { NgIdleKeepaliveModule } from '@ng-idle/keepalive';
+import { EmployeesComponent } from './components/employees/employees.component';
+import { EmployeeDialogComponent } from './components/employee-dialog/employee-dialog.component';
 // import { NgToastModule } from 'ng-angular-popup';
 
 
@@ -99,7 +101,9 @@ import { NgIdleKeepaliveModule } from '@ng-idle/keepalive';
     CustomerComponent,
     NotifierComponent,
     LoggedInComponent,
-    RegisterPostLoginComponent
+    RegisterPostLoginComponent,
+    EmployeesComponent,
+    EmployeeDialogComponent
   ],
   imports: [
     BrowserModule,

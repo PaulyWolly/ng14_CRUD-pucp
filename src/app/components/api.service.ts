@@ -1,10 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, OnInit } from '@angular/core';
-import { PostInterface } from '../models/post.interface';
+import { PostInterface } from '../_models/post.interface';
 import { Observable } from 'rxjs';
-import { UserInterface } from '../models/user.interface';
-import { CourseInterface } from '../models/course.interface';
-import { CountryInterface } from '../models/country.interface';
+import { UserInterface } from '../_models/user.interface';
+import { CourseInterface } from '../_models/course.interface';
+import { CountryInterface } from '../_models/country.interface';
 
 @Injectable({
   providedIn: 'root'

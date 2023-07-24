@@ -5,22 +5,23 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, Sort } from '@angular/material/sort';
 import { MatDialog } from '@angular/material/dialog';
 import { LiveAnnouncer } from '@angular/cdk/a11y';
-import { ProductInterface } from 'src/app/_models/product.interface';
-import { ProductDialogComponent } from '../product-dialog/product-dialog.component';
+import { EmployeeInterface } from 'src/app/_models/employee.interface';
+import { EmployeeDialogComponent } from '../employee-dialog/employee-dialog.component';
+import { DataService } from 'src/app/_services/data.service';
 
 
 @Component({
-  selector: 'app-products',
-  templateUrl: './products.component.html',
-  styleUrls: ['.//products.component.css']
+  selector: 'app-employees',
+  templateUrl: './employees.component.html',
+  styleUrls: ['.//employees.component.css']
 })
-export class ProductsComponent implements OnInit {
+export class EmployeesComponent implements OnInit {
   @Input() buttonLabel!: string;
 
-  products!: ProductInterface[];
+  employees!: EmployeeInterface[];
   isLoading = true;
 
-  displayedColumns: string[] = ["id", "productName", "category", "date", "freshness", "price", "comment", "action"];
+  displayedColumns: string[] = ["_id", "firstName", "lastName", "email", "phone", "action"];
   dataSource!: MatTableDataSource<any>;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -28,19 +29,20 @@ export class ProductsComponent implements OnInit {
 
   constructor(
     private apiService: ApiService,
+    private dataSrvc: DataService,
     private dialog: MatDialog,
     private _liveAnnouncer: LiveAnnouncer
   ) { }
 
   ngOnInit(): void {
-    this.getAllProducts();
+    this.getAllEmployees();
   }
 
-  getAllProducts() {
-    this.apiService.getProducts()
+  getAllEmployees() {
+    this.dataSrvc.getEmployees()
       .subscribe({
         next: (res: any) => {
-          console.log('Our Products: ', res);
+          console.log('Our Employees: ', res);
 
           this.isLoading = false;
 
@@ -51,40 +53,40 @@ export class ProductsComponent implements OnInit {
         },
         error: (res: any) => {
           this.isLoading = false;
-          alert('Error occurred while fetching Products');
+          alert('Error occurred while fetching Employees');
         }
       });
   }
 
 
-  onEditProduct(row: any) {
-    this.dialog.open(ProductDialogComponent, {
+  onEditEmployee(row: any) {
+    this.dialog.open(EmployeeDialogComponent, {
       width: '37%',
       data: row
     }).afterClosed().subscribe(val => {
       if (val === 'update') {
 
-        this.getAllProducts();
+        this.getAllEmployees();
       }
     });
   }
 
-  onDeleteProduct(id: any) {
-    let text = "Are you sure you want to delete product " + id + " ?? \nOK or Cancel.";
+  onDeleteEmployee(id: any) {
+    let text = "Are you sure you want to delete employee " + id + " ?? \nOK or Cancel.";
     if (confirm(text) == true) {
-      this.deleteTheProduct(id);
+      this.deleteTheEmployee(id);
     }
   }
 
-  deleteTheProduct(id: any) {
-    this.apiService.deleteProduct(id)
+  deleteTheEmployee(id: any) {
+    this.dataSrvc.deleteEmployee(id)
       .subscribe({
         next: (res) => {
-          console.log('product deleted');
-          this.getAllProducts();
+          console.log('employee deleted');
+          this.getAllEmployees();
         },
         error: () => {
-          alert('Error deleting product');
+          alert('Error deleting employee');
         }
       });
 

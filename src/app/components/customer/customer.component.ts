@@ -4,7 +4,7 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { AuthService } from '../../services/auth.service';
+import { AuthService } from '../../_services/auth.service';
 
 @Component({
   selector: 'app-customer',

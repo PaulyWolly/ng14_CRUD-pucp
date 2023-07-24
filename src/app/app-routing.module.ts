@@ -18,7 +18,7 @@ import { CountriesComponent } from './components/countries/countries.component';
 import { LoginComponent } from './components/login/login.component';
 // import { LoginUserComponent } from './components/login-user/login-user.component';
 
-import { AuthGuard } from './components/guard/auth.guard';
+import { AuthGuard } from './_helpers/guard/auth.guard';
 import { RegisterComponent } from './components/register/register.component';
 import { UserComponent } from './components/user/user.component';
 import { CustomerComponent } from './components/customer/customer.component';
@@ -26,6 +26,7 @@ import { LoginsComponent } from './components/logins/logins.component';
 import { LoggedInComponent } from './components/logged-in/logged-in.component';
 import { RegisterPostLoginComponent } from './components/register-post-login/register-post-login.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
+import { EmployeesComponent } from './components/employees/employees.component';
 
 
 const routes: Routes = [
@@ -108,6 +109,14 @@ const routes: Routes = [
   {
     path: 'users',
     component: UsersComponent,
+    // canActivate: [AuthGuard],
+    // data: {
+    //   title: 'Users'
+    // }
+  },
+  {
+    path: 'employees',
+    component: EmployeesComponent,
     // canActivate: [AuthGuard],
     // data: {
     //   title: 'Users'

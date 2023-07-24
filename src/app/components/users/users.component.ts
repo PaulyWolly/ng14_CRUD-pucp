@@ -1,13 +1,13 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { ApiService } from '../../services/api.service';
-import { PostInterface } from '../../models/post.interface';
+import { ApiService } from '../../_services/api.service';
+import { PostInterface } from '../../_models/post.interface';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, Sort } from '@angular/material/sort';
 
 import { MatDialog } from '@angular/material/dialog';
 import { LiveAnnouncer } from '@angular/cdk/a11y';
-import { UserInterface } from 'src/app/models/user.interface';
+import { UserInterface } from 'src/app/_models/user.interface';
 import { UserDialogComponent } from '../user-dialog/user-dialog.component';
 
 @Component({

@@ -2,14 +2,14 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 
-import { PostInterface } from '../models/post.interface';
-import { UserInterface } from '../models/user.interface';
-import { CourseInterface } from '../models/course.interface';
-import { ProductInterface } from '../models/product.interface';
+import { PostInterface } from '../_models/post.interface';
+import { UserInterface } from '../_models/user.interface';
+import { CourseInterface } from '../_models/course.interface';
+import { ProductInterface } from '../_models/product.interface';
 
 import { environment } from '../../environments/environment';
-import { CountryInterface } from '../models/country.interface';
-import { LoginInterface } from '../models/login.interface';
+import { CountryInterface } from '../_models/country.interface';
+import { LoginInterface } from '../_models/login.interface';
 
 @Injectable({
   providedIn: 'root'

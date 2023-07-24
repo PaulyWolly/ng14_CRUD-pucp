@@ -1,6 +1,6 @@
 import { Component, Input, OnInit, AfterViewInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { ApiService } from '../../services/api.service';
+import { ApiService } from '../../_services/api.service';
 import { Router } from '@angular/router';
 
 import { UserDialogComponent } from '../user-dialog/user-dialog.component';
@@ -8,6 +8,8 @@ import { ProductDialogComponent } from '../product-dialog/product-dialog.compone
 import { PostDialogComponent } from '../post-dialog/post-dialog.component';
 import { CourseDialogComponent } from '../course-dialog/course-dialog.component';
 import { LoginDialogComponent } from '../login-dialog/login-dialog.component';
+import { EmployeeDialogComponent } from '../employee-dialog/employee-dialog.component';
+import { DataService } from 'src/app/_services/data.service';
 
 @Component({
   selector: 'app-header',
@@ -22,6 +24,7 @@ export class HeaderComponent implements OnInit, AfterViewInit {
   constructor(
     private dialog: MatDialog,
     private apiSrvc: ApiService,
+    private dataSrvc: DataService,
     private router: Router
   ) { }
 
@@ -36,7 +39,7 @@ export class HeaderComponent implements OnInit, AfterViewInit {
 
   checkBtnView() {
     let value = localStorage.getItem('buttonValue');
-    if (value == 'Login' || value == 'Post' || value == 'User' || value == 'Course' || value == 'Product' ) {
+    if (value == 'Login' || value == 'Post' || value == 'Employee' || value == 'Course' || value == 'Product' ) {
       this.showButton();
     } else {
       let value = localStorage.setItem('buttonValue', '')
@@ -79,19 +82,19 @@ export class HeaderComponent implements OnInit, AfterViewInit {
     let value = localStorage.getItem('buttonValue');
 
     switch(value) {
-      case 'Logins': {
-        this.dialog.open(LoginDialogComponent, {
+      case 'Employee': {
+        this.dialog.open(EmployeeDialogComponent, {
           width: '37%'
         }).afterClosed().subscribe(val => {
           if (val === 'save') {
-            this.apiSrvc.getPosts()
+            this.dataSrvc.getEmployees()
               .subscribe({
                 next: (res) => {
                   // reload application to see new product
                   window.location.reload();
                 },
                 error: () => {
-                  alert('Error occured while opening Login dialog');
+                  alert('Error occured while opening Employee dialog');
                 }
               });
           }
@@ -243,6 +246,12 @@ export class HeaderComponent implements OnInit, AfterViewInit {
     this.addMode = true;
     localStorage.setItem('buttonValue', 'User');
     this.buttonLabel = 'User';
+  }
+
+  setEmployeeValue() {
+    this.addMode = true;
+    localStorage.setItem('buttonValue', 'Employee');
+    this.buttonLabel = 'Employee';
   }
 
   setProductValue() {

@@ -3,7 +3,7 @@ import { FormBuilder, Validators } from '@angular/forms'
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
-import { AuthService } from '../../services/auth.service';
+import { AuthService } from '../../_services/auth.service';
 import { MatDialog } from '@angular/material/dialog';
 import { UpdatepopupComponent } from '../updatepopup/updatepopup.component'
 import { Router } from '@angular/router';

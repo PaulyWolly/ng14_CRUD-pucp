@@ -1,9 +1,9 @@
 import { Component, EventEmitter, Inject, OnInit, Output } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { ApiService } from '../../services/api.service';
+import { ApiService } from '../../_services/api.service';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
-import { ProductInterface } from '../../models/product.interface';
-import { Option } from '../../models/option.interface';
+import { ProductInterface } from '../../_models/product.interface';
+import { Option } from '../../_models/option.interface';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({

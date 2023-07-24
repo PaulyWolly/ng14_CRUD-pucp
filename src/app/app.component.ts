@@ -1,14 +1,14 @@
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
-import { ApiService } from './services/api.service';
+import { ApiService } from './_services/api.service';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
 import { LiveAnnouncer } from '@angular/cdk/a11y';
 
-import { AuthService } from './services/auth.service';
+import { AuthService } from './_services/auth.service';
 import { Router } from '@angular/router';
-import { AppService } from './services/app.service';
+import { AppService } from './_services/app.service';
 
 //  ng-idel libraries
 import { DEFAULT_INTERRUPTSOURCES, Idle } from '@ng-idle/core';
@@ -40,9 +40,9 @@ export class AppComponent implements OnInit, AfterViewInit {
 
   // @ViewChild('childModal', { static: false }) childModal!: ModalDirective;
 
-  private numberOfSeconds: number = 30;
-  private idleSeconds: number = 30;
-  private timeoutSeconds: number = 30;
+  private numberOfSeconds: number = 240;
+  private idleSeconds: number = 240;
+  private timeoutSeconds: number = 240;
 
   // displayedColumns: string[] = ["id", "productName", "category", "date", "freshness", "price", "comment", "action"];
   dataSource!: MatTableDataSource<any>;

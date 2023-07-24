@@ -1,6 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { MatMenuTrigger } from '@angular/material/menu';
-import { Item } from '../../models/Item';
+import { Item } from '../../_models/Item';
 
 @Component({
   selector: 'app-contextmenu',

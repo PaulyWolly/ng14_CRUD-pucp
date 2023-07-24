@@ -1,11 +1,11 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
-import { ApiService } from '../../services/api.service';
+import { ApiService } from '../../_services/api.service';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, Sort } from '@angular/material/sort';
 import { MatDialog } from '@angular/material/dialog';
 import { LiveAnnouncer } from '@angular/cdk/a11y';
-import { CourseInterface } from 'src/app/models/course.interface';
+import { CourseInterface } from 'src/app/_models/course.interface';
 import { CourseDialogComponent } from '../course-dialog/course-dialog.component';
 // import { CourseDialogComponent } from '../course-dialog/course-dialog.component';
 

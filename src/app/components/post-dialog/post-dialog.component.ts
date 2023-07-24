@@ -1,8 +1,8 @@
 import { Component, EventEmitter, Inject, OnInit, Output } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { ApiService } from '../../services/api.service';
+import { ApiService } from '../../_services/api.service';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
-import { PostInterface } from '../../models/post.interface';
+import { PostInterface } from '../../_models/post.interface';
 import { ProductDialogComponent } from '../product-dialog/product-dialog.component';
 
 @Component({

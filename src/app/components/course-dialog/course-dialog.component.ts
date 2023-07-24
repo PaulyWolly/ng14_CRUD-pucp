@@ -1,9 +1,9 @@
 import { Component, EventEmitter, Inject, OnInit, Output } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { ApiService } from '../../services/api.service';
+import { ApiService } from '../../_services/api.service';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
-import { CourseInterface } from 'src/app/models/course.interface';
-import { Option } from 'src/app/models/option.interface';
+import { CourseInterface } from 'src/app/_models/course.interface';
+import { Option } from 'src/app/_models/option.interface';
 
 @Component({
   selector: 'app-course-dialog',
