@@ -1,4 +1,6 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, Inject, OnInit, ViewChild } from '@angular/core';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 
 // ngx-bootstrap modal handling
 // import { BsModalService } from 'ngx-bootstrap/modal';
@@ -19,11 +21,16 @@ export class ModalInactivityComponent implements OnInit {
   // lastPing?: Date = null;
   title = 'angular-idle-timeout';
 
-  // public modalRef!: BsModalRef;
+  private dialogref!: MatDialogRef<ModalInactivityComponent>
+  @Inject(MAT_DIALOG_DATA) public data: any
+
 
   // @ViewChild('childModal', { static: false }) childModal!: ModalDirective;
 
-  constructor() { }
+  constructor(
+    private router: Router,
+
+  ) { }
 
   ngOnInit(): void {
   }
@@ -32,8 +39,15 @@ export class ModalInactivityComponent implements OnInit {
 
   }
 
-  logout() {
+  // stay() {
+  //   this.childModal.hide();
+  //   this.reset();
+  // }
 
+  logout() {
+    // this.childModal.hide();
+    // this.appService.setUserLoggedIn(false);
+    // this.router.navigate(['/']);
   }
 
 }
