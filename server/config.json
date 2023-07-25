@@ -1,4 +1,4 @@
 ﻿{
-    "connectionString": "mongodb://127.0.0.1:27017/node-mongo-products-api",
+    "connectionString": "mongodb+srv://allAccess:AaBbCcXxYyZz12345@cluster0.k82k8qn.mongodb.net/",
     "secret": "THIS IS USED TO SIGN AND VERIFY JWT TOKENS, REPLACE IT WITH YOUR OWN SECRET, IT CAN BE ANY STRING"
 }

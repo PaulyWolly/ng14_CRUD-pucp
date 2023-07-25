@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
-import { EmployeeInterface } from '../_models/employee.interface';
+import { Employee } from '../_models/employee';
 
 @Injectable({
  providedIn: 'root'
@@ -15,7 +15,7 @@ export class DataService {
 
  // To Get The List Of Employee
  getEmployees() {
-  return this.http.get<EmployeeInterface>(`${this.uri}`);
+  return this.http.get<Employee>(`${this.uri}`);
  }
 
  // To Get Employee Details For Single Record Using Id

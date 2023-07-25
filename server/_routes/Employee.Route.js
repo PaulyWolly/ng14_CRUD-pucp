@@ -20,8 +20,10 @@ employeeRoute.route('/').get(function (req, res) {
 });
 
 // To Add New Employee
-employeeRoute.route('/addEmployee').post(function (req, res) {
+employeeRoute.route('/addEmployee').post(function (req, res, next) {
+
   let employee = new employeeModel(req.body);
+
   employee.save()
     .then(game => {
       res.status(200).json({
@@ -34,8 +36,10 @@ employeeRoute.route('/addEmployee').post(function (req, res) {
 });
 
 // To Get Employee Details By Employee ID
-employeeRoute.route('/editEmployee/:id').get(function (req, res) {
+employeeRoute.route('/editEmployee/:id').get(function (req, res, next) {
+
   let id = req.params.id;
+
   employeeModel.findById(id, function (err, employee) {
     res.json(employee);
   });
@@ -64,13 +68,36 @@ employeeRoute.route('/updateEmployee/:id').post(function (req, res, next) {
 });
 
 // To Delete The Employee
-employeeRoute.route('/deleteEmployee/:id').get(function (req, res) {
+employeeRoute.route('/deleteEmployee/:id').get(function (req, res, next) {
   employeeModel.findByIdAndRemove({
-    _id: req.params.id
+    id: req.params.id
   }, function (err, employee) {
     if (err) res.json(err);
     else res.json('Employee Deleted Successfully');
   });
+
+//   .delete("/:id", async (req, res) => {
+//     try {
+//         const id = req?.params?.id;
+//         const query = { _id: new mongodb.ObjectId(id) };
+//         const result = await collections.employees.deleteOne(query);
+
+//         if (result && result.deletedCount) {
+//             res.status(202).send(`Removed an employee: ID ${id}`);
+//         } else if (!result) {
+//             res.status(400).send(`Failed to remove an employee: ID ${id}`);
+//         } else if (!result.deletedCount) {
+//             res.status(404).send(`Failed to find an employee: ID ${id}`);
+//         }
+//     } catch (error) {
+//         console.error(error.message);
+//         res.status(400).send(error.message);
+//     }
+//  });
+
+  // .delete(req.params.id)
+  //       .then(() => res.json({ message: 'Employee deleted successfully' }))
+  //       .catch(next);
 });
 
 module.exports = employeeRoute;

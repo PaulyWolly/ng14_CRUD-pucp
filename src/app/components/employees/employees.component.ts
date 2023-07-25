@@ -21,7 +21,7 @@ export class EmployeesComponent implements OnInit {
   employees!: EmployeeInterface[];
   isLoading = true;
 
-  displayedColumns: string[] = ["_id", "firstName", "lastName", "email", "phone", "action"];
+  displayedColumns: string[] = [ "name", "position", "level", "action"];
   dataSource!: MatTableDataSource<any>;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;

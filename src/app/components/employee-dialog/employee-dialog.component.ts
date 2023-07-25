@@ -2,7 +2,7 @@ import { Component, EventEmitter, Inject, OnInit, Output } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ApiService } from '../../_services/api.service';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
-import { EmployeeInterface } from '../../_models/employee.interface';
+import { Employee } from '../../_models/employee';
 // import { Option } from '../../_models/option.interface';
 import { ToastrService } from 'ngx-toastr';
 import { DataService } from 'src/app/_services/data.service';
@@ -14,9 +14,7 @@ import { DataService } from 'src/app/_services/data.service';
 })
 export class EmployeeDialogComponent implements OnInit {
 
-  freshSelection!: string;
-  freshnessList: string[] = ["Brand New", "Second Hand", "Refurbished"];
-
+  levelList: string[] = ["Junior", "Major", "Senior"];
   employeeForm!: FormGroup;
   dialogTitle: string = 'Add an Employee';
   actionLabel: string = 'Add';
@@ -41,19 +39,17 @@ export class EmployeeDialogComponent implements OnInit {
 
   ngOnInit(): void {
     this.employeeForm = this.formBuilder.group({
-      firstName: ['', Validators.required],
-      lastName: ['', Validators.required],
-      email: ['', Validators.required],
-      phone: ['', Validators.required]
+      name: ['', Validators.required],
+      position: ['', Validators.required],
+      level: ['', Validators.required]
     });
 
     if (this.editData) {
 
       this.actionBtn = "Update";
-      this.employeeForm.controls['firstName'].setValue(this.editData.firstName);
-      this.employeeForm.controls['lastName'].setValue(this.editData.lastName);
-      this.employeeForm.controls['email'].setValue(this.editData.email);
-      this.employeeForm.controls['phone'].setValue(this.editData.phone);
+      this.employeeForm.controls['name'].setValue(this.editData.name);
+      this.employeeForm.controls['position'].setValue(this.editData.position);
+      this.employeeForm.controls['level'].setValue(this.editData.level);
     }
   }
 
@@ -70,7 +66,8 @@ export class EmployeeDialogComponent implements OnInit {
               this.toastr.success(
                 'Employee added successfully',
                 'Employee added',
-                { timeOut: 5000 });
+                { timeOut: 5000 }
+              );
 
               this.employeeForm.reset();
               this.dialogRef.close('save');

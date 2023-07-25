@@ -6,18 +6,36 @@
   <form [formGroup]="employeeForm">
     <!-- form fields -->
     <mat-form-field appearance="outline">
-      <mat-label>Employee First Name</mat-label>
+      <mat-label>Employee Full Name</mat-label>
       <input matInput
-             formControlName="firstName"
-             placeholder="First Name">
+             formControlName="name"
+             placeholder="Full Name">
     </mat-form-field>
-    <mat-form-field appearance="outline">
+    <!-- <mat-form-field appearance="outline">
       <mat-label>Employee Last Name</mat-label>
       <input matInput
              formControlName="lastName"
              placeholder="Last Name">
-    </mat-form-field>
+    </mat-form-field> -->
     <mat-form-field appearance="outline">
+      <mat-label>Employee Position</mat-label>
+      <input matInput
+             formControlName="position"
+             placeholder="Employee Position">
+    </mat-form-field>
+    <mat-radio-group
+      formControlName="level"
+      class="example-radio-group"
+    >
+      <mat-radio-button
+        class="example-radio-button"
+        *ngFor="let level of levelList"
+        [value]="level">
+        {{ level }}
+      </mat-radio-button>
+    </mat-radio-group>
+
+    <!-- <mat-form-field appearance="outline">
       <mat-label>Employee Email</mat-label>
       <input matInput
              formControlName="email"
@@ -28,7 +46,7 @@
       <input matInput
              formControlName="phone"
              placeholder="Phone">
-    </mat-form-field>
+    </mat-form-field> -->
 
   </form>
 </div>
@@ -42,6 +60,6 @@
           style="margin-left: 8px;"
           mat-raised-button
           color="primary"
-          [disabled]="employeeForm.invalid"
+
           (click)="addEmployee()">{{ actionBtn }}</button>
 </div>
