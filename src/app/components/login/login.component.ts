@@ -59,8 +59,9 @@ export class LoginComponent implements OnInit {
         this.result = item;
         if (this.result.password === this.loginform.value.password) {
           if (this.result.isactive) {
-            sessionStorage.setItem('username',this.result.id);
-            sessionStorage.setItem('role',this.result.role);
+            sessionStorage.setItem('username', this.result.id);
+            sessionStorage.setItem('role', this.result.role);
+            sessionStorage.setItem('userName', this.result.name || this.result.id);
             this.router.navigate(['loggedIn']);
             this.checkIsLoggedIn();
           } else {

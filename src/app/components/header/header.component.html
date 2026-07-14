@@ -137,10 +137,12 @@
 
       </ul>
 
-      <button *ngIf="isLoggedIn"
-              type="button"
-              class="btn btn-danger ms-auto header-logout"
-              (click)="logout()">Logout</button>
+      <div *ngIf="isLoggedIn" class="header-user ms-auto">
+        <span class="welcome-text">Welcome {{ userName }}</span>
+        <button type="button"
+                class="btn btn-danger header-logout"
+                (click)="logout()">Logout</button>
+      </div>
 
     </div>
   </div>

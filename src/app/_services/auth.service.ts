@@ -37,6 +37,9 @@ export class AuthService {
   getrole(){
     return sessionStorage.getItem('role')!=null?sessionStorage.getItem('role')?.toString():'';
   }
+  getUserName(){
+    return sessionStorage.getItem('userName') || sessionStorage.getItem('username') || '';
+  }
   GetAllCustomer(){
     return this.http.get(this.apiUrl + 'customer');
   }
@@ -47,6 +50,7 @@ export class AuthService {
   logout() {
     sessionStorage.removeItem('username');
     sessionStorage.removeItem('role');
+    sessionStorage.removeItem('userName');
     localStorage.removeItem('currentUser');
   }
 }

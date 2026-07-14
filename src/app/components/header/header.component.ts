@@ -11,6 +11,7 @@ import { AuthService } from '../../_services/auth.service';
 })
 export class HeaderComponent implements OnInit, OnDestroy {
   isLoggedIn = false;
+  userName = '';
   private routerSub?: Subscription;
 
   constructor(
@@ -31,6 +32,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   checkIsLoggedIn(): void {
     this.isLoggedIn = this.authService.isloggedin();
+    this.userName = this.isLoggedIn ? this.authService.getUserName() : '';
   }
 
   hideButton(): void {
@@ -44,6 +46,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   logout(): void {
     this.authService.logout();
     this.isLoggedIn = false;
+    this.userName = '';
     this.hideButton();
     this.router.navigate(['login']);
   }

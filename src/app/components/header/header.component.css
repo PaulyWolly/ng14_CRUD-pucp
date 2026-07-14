@@ -1,5 +1,17 @@
-.header-logout {
+.header-user {
+  display: flex;
+  align-items: center;
+  gap: 12px;
   margin-left: auto;
+  white-space: nowrap;
+}
+
+.welcome-text {
+  color: #f0f0f0;
+  font-size: 0.95rem;
+}
+
+.header-logout {
   white-space: nowrap;
 }
 
