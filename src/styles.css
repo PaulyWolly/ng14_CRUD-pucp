@@ -63,6 +63,31 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   color: blue;
 }
 
+.content-toolbar {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 12px;
+}
+
+.content-toolbar > mat-form-field {
+  justify-self: start;
+}
+
+.page-title {
+  margin: 0;
+  color: blue;
+  justify-self: center;
+  text-align: center;
+}
+
+.add-button {
+  background-color: forestgreen !important;
+  color: white !important;
+  justify-self: end;
+}
+
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 

@@ -1,3 +1,8 @@
+.header-logout {
+  margin-left: auto;
+  white-space: nowrap;
+}
+
 .navbar-brand {
     color: white;
 }

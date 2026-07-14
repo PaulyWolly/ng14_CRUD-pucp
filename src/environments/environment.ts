@@ -4,7 +4,9 @@
 
 export const environment = {
   production: false,
-  API_URL: 'https://json-server-data-onrender.onrender.com/',
+  // Remote Render API is suspended — use local json-server for development
+  API_URL: 'http://localhost:3500/',
+  // API_URL: 'https://json-server-data-onrender.onrender.com/',
   MONGO_URL: 'https://angular15-signup-verify-backend.onrender.com'
 };
 

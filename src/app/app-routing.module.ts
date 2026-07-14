@@ -17,6 +17,7 @@ import { Breadcrumb2Component } from './components/breadcrumb2/breadcrumb2.compo
 import { CountriesComponent } from './components/countries/countries.component';
 import { LoginComponent } from './components/login/login.component';
 // import { LoginUserComponent } from './components/login-user/login-user.component';
+import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
 
 import { AuthGuard } from './_helpers/guard/auth.guard';
 import { RegisterComponent } from './components/register/register.component';
@@ -45,6 +46,10 @@ const routes: Routes = [
   {
     path: 'login',
     component: LoginComponent
+  },
+  {
+    path: 'forgot-password',
+    component: ForgotPasswordComponent
   },
   {
     path: 'register',

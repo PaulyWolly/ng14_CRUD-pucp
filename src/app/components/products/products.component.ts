@@ -56,6 +56,15 @@ export class ProductsComponent implements OnInit {
       });
   }
 
+  openAddDialog() {
+    this.dialog.open(ProductDialogComponent, {
+      width: '37%'
+    }).afterClosed().subscribe(val => {
+      if (val === 'save') {
+        this.getAllProducts();
+      }
+    });
+  }
 
   onEditProduct(row: any) {
     this.dialog.open(ProductDialogComponent, {

@@ -2904,8 +2904,8 @@
       "password": "ILoveCarrots",
       "email": "bbunny@gmail.com",
       "gender": "male",
-      "role": "",
-      "isactive": false
+      "role": "user",
+      "isactive": true
     }
   ],
   "role": [

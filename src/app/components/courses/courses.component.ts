@@ -57,6 +57,15 @@ export class CoursesComponent implements OnInit {
       });
   }
 
+  openAddDialog() {
+    this.dialog.open(CourseDialogComponent, {
+      width: '37%'
+    }).afterClosed().subscribe(val => {
+      if (val === 'save') {
+        this.getAllCourses();
+      }
+    });
+  }
 
   onEditCourse(row: any) {
     this.dialog.open(CourseDialogComponent, {

@@ -97,25 +97,25 @@
           <ul class="dropdown-menu dropdown-menu-dark">
             <li class="nav-item">
               <a class="nav-link"
-                (click)="setCourseValue()"
+                (click)="hideButton()"
                 [routerLink]="['/courses']"
                 [routerLinkActive]="['active']">Courses</a>
             </li>
             <li class="nav-item">
               <a class="nav-link"
-                 (click)="setPostValue()"
+                 (click)="hideButton()"
                  [routerLink]="['/posts']"
                  [routerLinkActive]="['active']">Posts</a>
             </li>
             <li class="nav-item">
               <a class="nav-link"
-                 (click)="setEmployeeValue()"
+                 (click)="hideButton()"
                  [routerLink]="['/employees']"
                  [routerLinkActive]="['active']">Employees</a>
             </li>
             <li class="nav-item">
               <a class="nav-link"
-                 (click)="setProductValue()"
+                 (click)="hideButton()"
                  [routerLink]="['/products']"
                  [routerLinkActive]="['active']">Products</a>
             </li>
@@ -137,8 +137,10 @@
 
       </ul>
 
-      <app-header-button *ngIf="addMode"
-            [buttonLabel]="buttonLabel"></app-header-button>
+      <button *ngIf="isLoggedIn"
+              type="button"
+              class="btn btn-danger ms-auto header-logout"
+              (click)="logout()">Logout</button>
 
     </div>
   </div>

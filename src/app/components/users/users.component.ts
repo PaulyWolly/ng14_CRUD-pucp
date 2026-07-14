@@ -57,6 +57,16 @@ export class UsersComponent implements OnInit {
       });
   }
 
+  openAddDialog() {
+    this.dialog.open(UserDialogComponent, {
+      width: '37%'
+    }).afterClosed().subscribe(val => {
+      if (val === 'save') {
+        this.getAllUsers();
+      }
+    });
+  }
+
   onEditUser(row: any) {
     this.dialog.open(UserDialogComponent, {
       width: '37%',

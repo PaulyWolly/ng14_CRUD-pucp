@@ -1,17 +1,16 @@
 <!-- <mat-spinner *ngIf="this.isLoading" style="margin:0 auto;"></mat-spinner> -->
-<div class="title-text">
-  <h2>Logins</h2>
-</div>
-
 <div class="table-container">
-  <mat-form-field>
-    <mat-label><span class="table-header-text"> Filter </span></mat-label>
-    <input matInput
-           (keyup)="applyFilter($event)"
-           placeholder="Ex. Mia"
-           #input>
-  </mat-form-field>
-
+  <div class="content-toolbar">
+    <mat-form-field>
+      <mat-label><span class="table-header-text"> Filter </span></mat-label>
+      <input matInput
+             (keyup)="applyFilter($event)"
+             placeholder="Ex. Mia"
+             #input>
+    </mat-form-field>
+    <h2 class="page-title">Logins</h2>
+    <button mat-raised-button class="add-button" (click)="openAddDialog()">Add Login</button>
+  </div>
 
   <div class="mat-elevation-z8">
 
@@ -171,7 +170,4 @@
   </div>
 
 </div>
-<div class="container">
-  <!-- <h1>You are successfully logged in</h1> -->
-  <button (click)="logout()" class="btn btn-danger pull-right">Logout</button>
-</div>
+

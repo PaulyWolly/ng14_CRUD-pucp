@@ -125,6 +125,21 @@ export class ApiService implements OnInit {
     return this.http.get<CountryInterface>(this.apiUrl + 'countries/')
   }
 
+  // Add new country (Create)
+  addCountry(data: CountryInterface) {
+    return this.http.post<any>(this.apiUrl + 'countries/', data);
+  }
+
+  // Update 1 country (Update)
+  updateCountry(data: CountryInterface, id: number) {
+    return this.http.put<any>(this.apiUrl + 'countries/' + id, data);
+  }
+
+  // Delete 1 country (Delete)
+  deleteCountry(id: number) {
+    return this.http.delete(this.apiUrl + 'countries/' + id);
+  }
+
   // LOGIN
 
   // Add new login (Create)

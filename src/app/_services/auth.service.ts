@@ -45,6 +45,8 @@ export class AuthService {
   }
 
   logout() {
+    sessionStorage.removeItem('username');
+    sessionStorage.removeItem('role');
     localStorage.removeItem('currentUser');
   }
 }

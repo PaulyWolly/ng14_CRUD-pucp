@@ -1,269 +1,50 @@
-import { Component, Input, OnInit, AfterViewInit } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
-import { ApiService } from '../../_services/api.service';
-import { Router } from '@angular/router';
-
-import { UserDialogComponent } from '../user-dialog/user-dialog.component';
-import { ProductDialogComponent } from '../product-dialog/product-dialog.component';
-import { PostDialogComponent } from '../post-dialog/post-dialog.component';
-import { CourseDialogComponent } from '../course-dialog/course-dialog.component';
-import { LoginDialogComponent } from '../login-dialog/login-dialog.component';
-import { EmployeeDialogComponent } from '../employee-dialog/employee-dialog.component';
-import { DataService } from 'src/app/_services/data.service';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { NavigationEnd, Router } from '@angular/router';
+import { Subscription } from 'rxjs';
+import { filter } from 'rxjs/operators';
+import { AuthService } from '../../_services/auth.service';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css']
 })
-export class HeaderComponent implements OnInit, AfterViewInit {
-  buttonLabel!: any;
-  addMode: boolean = false;
-  isLoggedIn: boolean = false;
+export class HeaderComponent implements OnInit, OnDestroy {
+  isLoggedIn = false;
+  private routerSub?: Subscription;
 
   constructor(
-    private dialog: MatDialog,
-    private apiSrvc: ApiService,
-    private dataSrvc: DataService,
-    private router: Router
+    private router: Router,
+    private authService: AuthService
   ) { }
 
   ngOnInit(): void {
-    // this.hideButton();
     this.checkIsLoggedIn();
+    this.routerSub = this.router.events
+      .pipe(filter((event): event is NavigationEnd => event instanceof NavigationEnd))
+      .subscribe(() => this.checkIsLoggedIn());
   }
 
-  ngAfterViewInit(): void {
-    this.checkBtnView();
+  ngOnDestroy(): void {
+    this.routerSub?.unsubscribe();
   }
 
-  checkBtnView() {
-    let value = localStorage.getItem('buttonValue');
-    if (value == 'Login' || value == 'Post' || value == 'Employee' || value == 'Course' || value == 'Product' ) {
-      this.showButton();
-    } else {
-      let value = localStorage.setItem('buttonValue', '')
-      this.hideButton();
-
-    }
+  checkIsLoggedIn(): void {
+    this.isLoggedIn = this.authService.isloggedin();
   }
 
-  getButtonLabel() {
-    let label = localStorage.getItem('buttonLabel');
-    this.buttonLabel = label;
-
-    this.reloadComponent(true);
-  }
-
-  setButtonLabel(value: string) {
-    localStorage.setItem('buttonLabel', value);
-
-    this.getButtonLabel();
-  }
-
-  checkIsLoggedIn() {
-
-    this.hideButton();
-
-    const username = sessionStorage.getItem('username');
-    if (username) {
-      this.isLoggedIn = true;
-    } else {
-      this.isLoggedIn = false;
-    }
-  }
-
-  makeLoggedOut() {
-    this.isLoggedIn = false;
-  }
-
-  openDialog() {
-
-    let value = localStorage.getItem('buttonValue');
-
-    switch(value) {
-      case 'Employee': {
-        this.dialog.open(EmployeeDialogComponent, {
-          width: '37%'
-        }).afterClosed().subscribe(val => {
-          if (val === 'save') {
-            this.dataSrvc.getEmployees()
-              .subscribe({
-                next: (res) => {
-                  // reload application to see new product
-                  window.location.reload();
-                },
-                error: () => {
-                  alert('Error occured while opening Employee dialog');
-                }
-              });
-          }
-        });
-        break;
-      }
-      case 'Post': {
-        this.dialog.open(PostDialogComponent, {
-          width: '37%'
-        }).afterClosed().subscribe(val => {
-          if (val === 'save') {
-            this.apiSrvc.getPosts()
-              .subscribe({
-                next: (res) => {
-                  // reload application to see new product
-                  window.location.reload();
-                },
-                error: () => {
-                  alert('Error occured while opening Post dialog');
-                }
-              });
-          }
-        });
-        break;
-      }
-      case 'User': {
-        this.dialog.open(UserDialogComponent, {
-          width: '37%'
-        }).afterClosed().subscribe(val => {
-          if (val === 'save') {
-            this.apiSrvc.getUsers()
-              .subscribe({
-                next: (res) => {
-                  // reload application to see new product
-                  window.location.reload();
-                },
-                error: () => {
-                  alert('Error occured while opening User dialog');
-                }
-              });
-          }
-        });
-        break;
-      }
-      case 'Product': {
-        this.dialog.open(ProductDialogComponent, {
-          width: '37%'
-        }).afterClosed().subscribe(val => {
-          if (val === 'save') {
-            this.apiSrvc.getProducts()
-              .subscribe({
-                next: (res) => {
-                  // reload application to see new product
-                  window.location.reload();
-                },
-                error: () => {
-                  alert('Error occured while opening Product dialog');
-                }
-              });
-          }
-        });
-        break;
-      }
-      case 'Course': {
-        this.dialog.open(CourseDialogComponent, {
-          width: '37%'
-        }).afterClosed().subscribe(val => {
-          if (val === 'save') {
-            this.apiSrvc.getCourses()
-              .subscribe({
-                next: (res) => {
-                  // reload application to see new course
-                  window.location.reload();
-                },
-                error: () => {
-                  alert('Error occured while opening Course dialog');
-                }
-              });
-          }
-        });
-        break;
-      }
-      default:
-        break;
-    } // End of switch
-  }
-
-  redirectTo(url: string): void {
-    // When skipLocationChange true, navigates without pushing a new state into history.
-    this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
-      this.router.navigate([url]);
-    });
-  }
-
-  reloadComponent(self: boolean, urlToNavigateTo?: string) {
-    //skipLocationChange:true means dont update the url to / when navigating
-    console.log("Current route I am on:", this.router.url);
-    const url = self ? this.router.url : urlToNavigateTo;
-    this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
-      this.router.navigate([`/${url}`]).then(() => {
-        console.log(`After navigation I am on:${this.router.url}`);
-      });
-    });
-  }
-
-
-  hideButtonLabel() {
-    this.addMode = false;
-    this.buttonLabel = '';
-  }
-
-  hideButton() {
-    this.addMode = false;
-    this.buttonLabel = '';
-  }
-
-  showButton() {
-    this.addMode = true;
-    let buttonValue = this.buttonLabel = JSON.stringify(localStorage.getItem('buttonValue'))
-    let updatedValue = buttonValue.replaceAll('"', '');
-
-    return this.buttonLabel = updatedValue;
-  }
-
-  setHiddenValue() {
-    this.addMode = false;
-    this.buttonLabel = '';
-  }
-
-  setBlankValue() {
-    this.addMode = false;
+  hideButton(): void {
     localStorage.setItem('buttonValue', '');
-    this.buttonLabel = '';
   }
 
-  setLoginValue() {
-    this.addMode = true;
-    localStorage.setItem('buttonValue', 'Login');
-    this.buttonLabel = 'Login';
+  setBlankValue(): void {
+    this.hideButton();
   }
 
-  setPostValue() {
-    this.addMode = true;
-    localStorage.setItem('buttonValue', 'Post');
-    this.buttonLabel = 'Post';
+  logout(): void {
+    this.authService.logout();
+    this.isLoggedIn = false;
+    this.hideButton();
+    this.router.navigate(['login']);
   }
-
-  setUserValue() {
-    this.addMode = true;
-    localStorage.setItem('buttonValue', 'User');
-    this.buttonLabel = 'User';
-  }
-
-  setEmployeeValue() {
-    this.addMode = true;
-    localStorage.setItem('buttonValue', 'Employee');
-    this.buttonLabel = 'Employee';
-  }
-
-  setProductValue() {
-    this.addMode = true;
-    localStorage.setItem('buttonValue', 'Product');
-    this.buttonLabel = 'Product';
-  }
-
-  setCourseValue() {
-    this.addMode = true;
-    localStorage.setItem('buttonValue', 'Course');
-    this.buttonLabel = 'Course';
-  }
-
 }

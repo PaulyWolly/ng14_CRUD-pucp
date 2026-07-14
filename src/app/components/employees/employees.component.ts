@@ -58,6 +58,15 @@ export class EmployeesComponent implements OnInit {
       });
   }
 
+  openAddDialog() {
+    this.dialog.open(EmployeeDialogComponent, {
+      width: '37%'
+    }).afterClosed().subscribe(val => {
+      if (val === 'save') {
+        this.getAllEmployees();
+      }
+    });
+  }
 
   onEditEmployee(row: any) {
     this.dialog.open(EmployeeDialogComponent, {

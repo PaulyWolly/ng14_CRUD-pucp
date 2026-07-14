@@ -6,8 +6,7 @@ import { MatSort, Sort } from '@angular/material/sort';
 import { MatDialog } from '@angular/material/dialog';
 import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { CountryInterface } from 'src/app/_models/country.interface';
-
-
+import { CountryDialogComponent } from '../country-dialog/country-dialog.component';
 
 @Component({
   selector: 'app-countries',
@@ -36,7 +35,6 @@ export class CountriesComponent implements OnInit {
     this.getAllCountries();
   }
 
-
   getAllCountries() {
     this.apiService.getCountries()
       .subscribe({
@@ -50,11 +48,21 @@ export class CountriesComponent implements OnInit {
           this.dataSource.sort = this.sort;
 
         },
-        error: (res: any) => {
+        error: () => {
           this.isLoading = false;
           alert('Error occurred while fetching Countries');
         }
       });
+  }
+
+  openAddDialog() {
+    this.dialog.open(CountryDialogComponent, {
+      width: '37%'
+    }).afterClosed().subscribe(val => {
+      if (val === 'save') {
+        this.getAllCountries();
+      }
+    });
   }
 
   applyFilter(event: Event) {
@@ -66,7 +74,6 @@ export class CountriesComponent implements OnInit {
     }
   }
 
-  /** Announce the change in sort state */
   announceSortChange(sortState: Sort) {
     if (sortState.direction) {
       this._liveAnnouncer.announce(`Sorted ${sortState.direction}ending`);
@@ -74,5 +81,4 @@ export class CountriesComponent implements OnInit {
       this._liveAnnouncer.announce('Sorting cleared');
     }
   }
-
 }

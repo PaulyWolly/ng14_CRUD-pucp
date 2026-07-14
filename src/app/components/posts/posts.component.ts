@@ -54,6 +54,16 @@ export class PostsComponent implements OnInit {
       });
   }
 
+  openAddDialog() {
+    this.dialog.open(PostDialogComponent, {
+      width: '37%'
+    }).afterClosed().subscribe(val => {
+      if (val === 'save') {
+        this.getAllPosts();
+      }
+    });
+  }
+
   // .subscribe({ next: (res: any) => { console.log('connected to: ', res) }, error: (res: any) => { console.log('error with ', res) })
 
 

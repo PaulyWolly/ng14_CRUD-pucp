@@ -61,6 +61,15 @@ export class LoginsComponent implements OnInit {
       });
   }
 
+  openAddDialog() {
+    this.dialog.open(LoginDialogComponent, {
+      width: '37%'
+    }).afterClosed().subscribe(val => {
+      if (val === 'save') {
+        this.getAllLogins();
+      }
+    });
+  }
 
   onEditLogin(row: any) {
     this.dialog.open(LoginDialogComponent, {

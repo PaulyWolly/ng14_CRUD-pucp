@@ -38,6 +38,7 @@ import { MatChipsModule } from '@angular/material/chips';
 import { BreadcrumbComponent } from './components/breadcrumb/breadcrumb.component';
 import { Breadcrumb2Component } from './components/breadcrumb2/breadcrumb2.component';
 import { CountriesComponent } from './components/countries/countries.component';
+import { CountryDialogComponent } from './components/country-dialog/country-dialog.component';
 import { LoginComponent } from './components/login/login.component';
 import { LoginDialogComponent } from './components/login-dialog/login-dialog.component';
 import { LoginUserComponent } from './components/login-user/login-user.component';
@@ -88,6 +89,7 @@ import { EmployeeDialogComponent } from './components/employee-dialog/employee-d
     BreadcrumbComponent,
     Breadcrumb2Component,
     CountriesComponent,
+    CountryDialogComponent,
     LoginComponent,
     LoginDialogComponent,
     LoginUserComponent,
