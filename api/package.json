@@ -1,0 +1,14 @@
+{
+  "name": "ng14-crud-json-api",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node server.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "json-server": "^0.17.4"
+  }
+}

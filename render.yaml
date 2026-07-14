@@ -1,9 +1,12 @@
-# Optional Render Blueprint — or create the Web Service manually in the dashboard.
+# Render Web Service for the json-server API (login/CRUD backend)
 services:
   - type: web
     name: ng14-crud-json-api
     runtime: node
     plan: free
+    rootDir: api
     buildCommand: npm install
-    startCommand: npm run start:api
-    healthCheckPath: /logged-in-users
+    startCommand: npm start
+    envVars:
+      - key: NODE_VERSION
+        value: "18"
