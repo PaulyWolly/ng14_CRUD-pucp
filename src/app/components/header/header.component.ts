@@ -32,7 +32,27 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   checkIsLoggedIn(): void {
     this.isLoggedIn = this.authService.isloggedin();
-    this.userName = this.isLoggedIn ? this.authService.getUserName() : '';
+    if (!this.isLoggedIn) {
+      this.userName = '';
+      return;
+    }
+
+    this.userName = this.authService.getUserName();
+    const username = sessionStorage.getItem('username') || '';
+
+    // Older sessions only had username (id) — load full display name from API
+    if (!this.userName || this.userName === username) {
+      this.authService.GetUserbyCode(username).subscribe({
+        next: (user: any) => {
+          const displayName = user?.name || username;
+          sessionStorage.setItem('userName', displayName);
+          this.userName = displayName;
+        },
+        error: () => {
+          this.userName = username;
+        }
+      });
+    }
   }
 
   hideButton(): void {

@@ -1,33 +1,28 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
-import { ApiService } from './_services/api.service';
+import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
 import { LiveAnnouncer } from '@angular/cdk/a11y';
+import { NavigationEnd, Router } from '@angular/router';
+import { Subscription } from 'rxjs';
+import { filter } from 'rxjs/operators';
 
 import { AuthService } from './_services/auth.service';
-import { Router } from '@angular/router';
+import { ApiService } from './_services/api.service';
 import { AppService } from './_services/app.service';
 
-//  ng-idle libraries
 import { DEFAULT_INTERRUPTSOURCES, Idle } from '@ng-idle/core';
 import { Keepalive } from '@ng-idle/keepalive';
 import { ModalInactivityComponent } from './components/modal-inactivity/modal-inactivity.component';
 import { ToastrService } from 'ngx-toastr';
-
-// ngx-bootstrap modal handling
-// import { BsModalService } from 'ngx-bootstrap/modal';
-// import { BsModalRef } from 'ngx-bootstrap/modal';
-// import { ModalDirective } from 'ngx-bootstrap/modal';
-
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements OnInit, AfterViewInit {
+export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
   title = 'ng14 CRUD pucp w/inactivity';
   buttonLabel: any;
 
@@ -36,15 +31,11 @@ export class AppComponent implements OnInit, AfterViewInit {
   timedOut = false;
   lastPing?: Date;
 
-  // public modalRef!: BsModalRef;
-
-  // @ViewChild('childModal', { static: false }) childModal!: ModalDirective;
-
   private numberOfSeconds: number = 240;
   private idleSeconds: number = 240;
   private timeoutSeconds: number = 240;
+  private routerSub?: Subscription;
 
-  // displayedColumns: string[] = ["id", "productName", "category", "date", "freshness", "price", "comment", "action"];
   dataSource!: MatTableDataSource<any>;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -63,37 +54,45 @@ export class AppComponent implements OnInit, AfterViewInit {
   ) { }
 
   ngOnInit(): void {
-    // this.getAllProducts();
     this._idle.setIdle(this.idleSeconds);
     this._idle.setTimeout(this.timeoutSeconds);
     this._idle.setInterrupts(DEFAULT_INTERRUPTSOURCES);
 
     this._idle.onIdleStart.subscribe(() => {
-      // show the modal
-      this.idleState = "You have been idle."
+      if (!this.authService.isloggedin()) {
+        return;
+      }
+      this.idleState = 'You have been idle.';
       console.log(this.idleState);
-      this.toastr.error("You have been idle!", "Error Message", {
+      this.toastr.error('You have been idle!', 'Error Message', {
         timeOut: 5000,
       });
-
     });
 
     this._idle.onTimeoutWarning.subscribe((secondsLeft: number) => {
-      // Update the warning message
+      if (!this.authService.isloggedin()) {
+        return;
+      }
       console.log('Logging out in:', secondsLeft);
       this.toastr.info(`Logging out in ${secondsLeft} seconds`);
     });
 
     this._idle.onIdleEnd.subscribe(() => {
-      this.idleState = 'No longer idle. Reseting.'
+      if (!this.authService.isloggedin()) {
+        return;
+      }
+      this.idleState = 'No longer idle. Resetting.';
       console.log(this.idleState);
       this.toastr.success('No longer idle. Resetting.');
       this.reset();
     });
 
     this._idle.onTimeout.subscribe(() => {
-      // Hide the modal, log out, do something else
-      this.idleState = 'Logging out!'
+      if (!this.authService.isloggedin()) {
+        this.stopIdleWatch();
+        return;
+      }
+      this.idleState = 'Logging out!';
       console.log(this.idleState);
       this.toastr.error('Logging out!');
       this.logout();
@@ -101,13 +100,35 @@ export class AppComponent implements OnInit, AfterViewInit {
 
     this.keepalive.onPing.subscribe(() => this.lastPing = new Date());
 
-    this._idle.watch();
+    this.syncIdleWatch();
+    this.routerSub = this.router.events
+      .pipe(filter((event): event is NavigationEnd => event instanceof NavigationEnd))
+      .subscribe(() => this.syncIdleWatch());
+  }
 
+  ngOnDestroy(): void {
+    this.routerSub?.unsubscribe();
+    this.stopIdleWatch();
   }
 
   ngAfterViewInit() {
     localStorage.setItem('buttonLabel', '');
     localStorage.setItem('buttonValue', '');
+  }
+
+  /** Only watch for inactivity when a user is logged in. */
+  syncIdleWatch(): void {
+    if (this.authService.isloggedin()) {
+      this.reset();
+    } else {
+      this.stopIdleWatch();
+    }
+  }
+
+  stopIdleWatch(): void {
+    this._idle.stop();
+    this.timedOut = false;
+    this.idleState = 'Not started.';
   }
 
   openDialog(code: string) {
@@ -119,23 +140,27 @@ export class AppComponent implements OnInit, AfterViewInit {
     });
 
     popup.afterClosed()
-      .subscribe(res => {
-      this.reset();
-    });
+      .subscribe(() => {
+        this.reset();
+      });
   }
 
   reset() {
+    if (!this.authService.isloggedin()) {
+      this.stopIdleWatch();
+      return;
+    }
     this._idle.watch();
     this.timedOut = false;
   }
 
   logout() {
+    this.stopIdleWatch();
     this.authService.logout();
     window.location.reload();
     this.router.navigate(['login']);
   }
 
-  /** Announce the change in sort state */
   announceSortChange(sortState: Sort) {
     if (sortState.direction) {
       this._liveAnnouncer.announce(`Sorted ${sortState.direction}ending`);

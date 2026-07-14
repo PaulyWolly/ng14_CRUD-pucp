@@ -4,9 +4,9 @@
 
 export const environment = {
   production: false,
-  // Remote Render API is suspended — use local json-server for development
-  API_URL: 'http://localhost:3500/',
-  // API_URL: 'https://json-server-data-onrender.onrender.com/',
+  // Same Render API as Netlify so local and production share one user database
+  API_URL: 'https://ng14-crud-pucp.onrender.com/',
+  // API_URL: 'http://localhost:3500/',
   MONGO_URL: 'https://angular15-signup-verify-backend.onrender.com'
 };
 
